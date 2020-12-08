@@ -11,6 +11,7 @@ export class Read extends React.Component{
     }
 
     state = {
+        //Movie Json Data
         movies: []
     };
 

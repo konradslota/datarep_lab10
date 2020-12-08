@@ -13,7 +13,7 @@ export class Create extends React.Component{
         this.onChangeYear = this.onChangeYear.bind(this);
         this.onChangePoster = this.onChangePoster.bind(this);
 
-        this.state ={
+        this.state = {
             Title: '',
             Year: '',
             Poster: ''
@@ -48,6 +48,7 @@ export class Create extends React.Component{
             year: this.state.Year,
             poster: this.state.Poster
         }
+        
         //axios API link
         axios.post('http://localhost:4000/api/movies',newMovie)
         .then((res)=>{

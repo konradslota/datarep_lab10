@@ -5,6 +5,11 @@ const port = 4000
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
+const path = require('path');
+
+//Joining our static folder under build folder
+app.use(express.static(path.join(__dirname, '../build')));
+app.use('/static', express.static(path.join(__dirname, 'build//static')));
 
 //Parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -76,7 +81,18 @@ app.get('/api/movies/:id', (req, res) => {
     })
 })
 
-//Feletes movie from the db
+//Updates Movie in db
+app.put('/api/movies/:id', (req, res)=>{
+    console.log("Update movie: " + req.params.id);
+    console.log(req.body);
+
+    MovieModel.findByIdAndUpdate(req.params.id, req.body, {new:true}, 
+        (err, data)=>{
+            res.send(data);
+        })
+})
+
+//Deletes movie from the db
 app.delete('/api/movies/:id', (req, res) => {
     console.log(req.params.id);
 
@@ -102,6 +118,11 @@ app.post('/api/movies', (req, res) => {
     //User feedback 
     res.send('Item Added');
 
+})
+
+//Joining our connection with build - frontend and backend
+app.get('*', (req, res)=>{
+    res.sendFile(path.join(__dirname + '/../build/index.html'));
 })
 
 app.listen(port, () => {
